@@ -134,7 +134,7 @@ class AuthController extends Controller
                 ], 422);
             }
         }
-        
+
         $data['password'] = Hash::make($request->password);
         $user = User::find(Auth::user()->id)->fill($data)->save();
 
@@ -145,9 +145,15 @@ class AuthController extends Controller
     public function update_profile_pic(Request $request)
     {
         if ($request->hasFile('image')) {
-            $path = Storage::put('uploads', $request->file('image'));
             $user = User::find(Auth::user()->id);
+            $file = $request->file('image');
+            $path = 'uploads/users/pp-' . $user->user_name . '-' . $user->id . rand(1000, 9999) . '.' . $file->getClientOriginalExtension();
+            Image::make($file)->fit(200, 200)->save(public_path($path));
             $user->photo = $path;
+
+            // $path = Storage::put('uploads', $request->file('image'));
+            // $user->photo = $path;
+
             $user->save();
             $data['user'] = User::where('id', Auth::user()->id)->select(['photo'])->first();
             return response()->json($data, 200);
