@@ -27,22 +27,24 @@ Route::group( ['prefix'=>'v1'],function(){
         Route::post('/register','AuthController@register');
         Route::post('/forget-password','AuthController@forget');
         Route::post('/forget-token','AuthController@forget_token');
-        Route::post('/check-auth','AuthController@check_auth');
     });
 
     Route::group( ['prefix'=>'/user','middleware'=>['auth:api'],'namespace'=>'Api' ],function(){
+        Route::get('/check-auth','AuthController@check_auth');
+        Route::get('/users','AuthController@users');
         Route::get('/logout','AuthController@logout');
         Route::post('/update-profile','AuthController@update_profile');
         Route::post('/update-profile-pic','AuthController@update_profile_pic');
     });
 
-    Route::group( ['prefix'=>'/book-list','middleware'=>['auth:api']],function(){
-        Route::get('/','BookListController@book_list');
-        Route::post('/store','BookListController@store');
-        Route::post('/update','BookListController@update');
-        Route::get('/get/{id}','BookListController@get');
-        Route::post('/delete','BookListController@delete');
-        Route::post('/delete-multi','BookListController@delete_multi');
+    Route::group( ['prefix'=>'/inventory','middleware'=>['auth:api'],'namespace'=>'Inventory' ],function(){
+        Route::group( ['prefix'=>'category'],function(){
+            Route::get('/all','DrugCategoryController@all');
+            Route::get('/get/{category}','DrugCategoryController@get');
+            Route::post('/create','DrugCategoryController@create');
+            Route::post('/update','DrugCategoryController@update');
+            Route::post('/delete','DrugCategoryController@delete');
+        });
     });
 
 });

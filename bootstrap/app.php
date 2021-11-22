@@ -11,6 +11,10 @@
 |
 */
 
+header('Access-Control-Allow-Origin', '*');
+header('Access-Control-Allow-Methods', '*');
+header('Access-Control-Allow-Headers', '*');
+
 $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
@@ -25,6 +29,8 @@ $app = new Illuminate\Foundation\Application(
 | incoming requests to this application from both the web and CLI.
 |
 */
+
+
 
 $app->singleton(
     Illuminate\Contracts\Http\Kernel::class,

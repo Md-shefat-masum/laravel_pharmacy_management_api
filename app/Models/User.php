@@ -12,6 +12,20 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $appends = [
+        'photoURL',
+        'displayName'
+    ];
+
+    public function getPhotoURLAttribute($value)
+    {
+        return url('/').'/'.$this->photo;
+    }
+    public function getDisplayNameAttribute($value)
+    {
+        return $this->user_name;
+    }
+
     /**
      * The attributes that are mass assignable.
      *

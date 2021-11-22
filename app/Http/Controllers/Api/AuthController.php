@@ -28,7 +28,6 @@ class AuthController extends Controller
                 'err_message' => 'validation error',
                 'data' => $validator->errors(),
             ], 422);
-
         } else {
             $req_data = request()->only('email', 'password');
             if (Auth::attempt($req_data)) {
@@ -69,25 +68,24 @@ class AuthController extends Controller
                 'data' => $validator->errors(),
             ], 422);
         } else {
-            $data = $request->except(['password','password_confirmation','image']);
+            $data = $request->except(['password', 'password_confirmation', 'image']);
             $data['role_serial'] = 4;
             $data['password'] = Hash::make($request->password);
             $user = User::create($data);
-            if($request->hasFile('image')){
+            if ($request->hasFile('image')) {
                 $file = $request->file('image');
-                $path = 'uploads/users/pp-'.$user->user_name.'-'.$user->id.rand(1000,9999).'.'.$file->getClientOriginalExtension();
+                $path = 'uploads/users/pp-' . $user->user_name . '-' . $user->id . rand(1000, 9999) . '.' . $file->getClientOriginalExtension();
                 Image::make($file)->fit(200, 200)->save(public_path($path));
                 $user->photo = $path;
             }
-            $user->slug = $user->name.$user->id.rand(1000,9999);
-            $user->role_serial != 5 ? $user->status = 'pending': $user->status = 'active';
+            $user->slug = $user->name . $user->id . rand(1000, 9999);
+            $user->role_serial != 5 ? $user->status = 'pending' : $user->status = 'active';
             $user->save();
 
             Auth::login($user);
             $user = User::where('id', Auth::user()->id)->with('user_role')->first();
-            $data['access_token'] = $user->createToken('accessToken')->accessToken;
-            $data['user'] = $user;
-            return response()->json($data, 200);
+            $user->access_token = $user->createToken('accessToken')->accessToken;
+            return response()->json($user, 200);
         }
     }
 
@@ -102,8 +100,17 @@ class AuthController extends Controller
     public function update_profile(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'min:4'],
-            'password' => ['required', 'min:8', 'confirmed'],
+            'first_name' => ['required'],
+            'last_name' => ['required'],
+            // 'user_name' => ['required', 'min:4', 'unique:users'],
+            // 'email' => ['required', 'unique:users'],
+            'contact_number' => ['required'],
+            // 'dob' => ['required'],
+            // 'street' => ['required'],
+            'city' => ['required'],
+            'zip_code' => ['required'],
+            'country' => ['required'],
+            //
         ]);
 
         if ($validator->fails()) {
@@ -114,7 +121,20 @@ class AuthController extends Controller
         }
 
         $data = $request->only(['name', 'password']);
-        $data['role_serial'] = 4;
+
+        if ($request->has('password') && strlen($request->password) > 0) {
+            $validator = Validator::make($request->all(), [
+                'password' => ['required', 'min:8', 'confirmed'],
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'err_message' => 'validation error',
+                    'data' => $validator->errors(),
+                ], 422);
+            }
+        }
+        
         $data['password'] = Hash::make($request->password);
         $user = User::find(Auth::user()->id)->fill($data)->save();
 
@@ -124,12 +144,12 @@ class AuthController extends Controller
 
     public function update_profile_pic(Request $request)
     {
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $path = Storage::put('uploads', $request->file('image'));
             $user = User::find(Auth::user()->id);
-            $user->image = $path;
+            $user->photo = $path;
             $user->save();
-            $data['user'] = User::where('id', Auth::user()->id)->with('user_role')->first();
+            $data['user'] = User::where('id', Auth::user()->id)->select(['photo'])->first();
             return response()->json($data, 200);
         }
     }
@@ -137,7 +157,7 @@ class AuthController extends Controller
     public function forget(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => ['required','exists:users'],
+            'email' => ['required', 'exists:users'],
         ]);
 
         if ($validator->fails()) {
@@ -146,7 +166,7 @@ class AuthController extends Controller
                 'data' => $validator->errors(),
             ], 422);
         }
-        $user = User::where('email',$request->email)->first();
+        $user = User::where('email', $request->email)->first();
         $user->forget_token = Hash::make(uniqid(50));
         $user->save();
 
@@ -156,7 +176,7 @@ class AuthController extends Controller
     public function forget_token(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'forget_token' => ['required','exists:users'],
+            'forget_token' => ['required', 'exists:users'],
         ]);
 
         if ($validator->fails()) {
@@ -167,16 +187,26 @@ class AuthController extends Controller
         }
 
         $temp_pass = Hash::make(uniqid(10));
-        $user = User::where('forget_token',$request->forget_token)->first();
+        $user = User::where('forget_token', $request->forget_token)->first();
         $user->forget_token = null;
         $user->password = Hash::make($temp_pass);
         $user->save();
 
-        return Mail::to('mshefat924@gmail.com')->send(new ForgetPassword(" your password is:  ".$temp_pass));
+        return Mail::to('mshefat924@gmail.com')->send(new ForgetPassword(" your password is:  " . $temp_pass));
     }
 
     public function check_auth()
     {
-        return Auth::check();
+
+        if (Auth::check()) {
+            return response()->json(Auth::user());
+        }
+        return response()->json(Auth::check());
+    }
+
+    public function users()
+    {
+        $users = User::get();
+        return response()->json($users);
     }
 }
