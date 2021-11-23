@@ -45,6 +45,43 @@ Route::group( ['prefix'=>'v1'],function(){
             Route::post('/update','DrugCategoryController@update');
             Route::post('/delete','DrugCategoryController@delete');
         });
+
+        Route::group( ['prefix'=>'storage'],function(){
+            Route::get('/all','DrugStorageController@all');
+            Route::get('/get/{category}','DrugStorageController@get');
+            Route::post('/create','DrugStorageController@create');
+            Route::post('/update','DrugStorageController@update');
+            Route::post('/delete','DrugStorageController@delete');
+        });
+
+        Route::group( ['prefix'=>'manufacturer'],function(){
+            Route::get('/all','DrugManufacturerController@all');
+            Route::get('/get/{category}','DrugManufacturerController@get');
+            Route::post('/create','DrugManufacturerController@create');
+            Route::post('/update','DrugManufacturerController@update');
+            Route::post('/delete','DrugManufacturerController@delete');
+        });
+
+        Route::group( ['prefix'=>'supplier'],function(){
+            Route::get('/all','DrugSupplierController@all');
+            Route::get('/get/{category}','DrugSupplierController@get');
+            Route::post('/create','DrugSupplierController@create');
+            Route::post('/update','DrugSupplierController@update');
+            Route::post('/delete','DrugSupplierController@delete');
+        });
+
+        Route::group( ['prefix'=>'drug'],function(){
+            Route::get('/all','DrugController@all');
+            Route::get('/get/{category}','DrugController@get');
+            Route::post('/create','DrugController@create');
+            Route::post('/update','DrugController@update');
+            Route::post('/delete','DrugController@delete');
+        });
+    });
+
+
+    Route::group( ['prefix'=>'/consumer','middleware'=>['auth:api'],'namespace'=>'Consumer' ],function(){
+        Route::get('/test','ConsumerController@get_data');
     });
 
 });
