@@ -14,23 +14,23 @@ class DrugCategorySeeder extends Seeder
      */
     public function run()
     {
-        DrugCategory::insert([
+        DrugCategory::create([
             'pharmacy_id' => 4,
             'name' => 'Antibiotics',
         ]);
-        DrugCategory::insert([
+        DrugCategory::create([
             'pharmacy_id' => 4,
             'name' => 'Antifungals',
         ]);
-        DrugCategory::insert([
+        DrugCategory::create([
             'pharmacy_id' => 4,
             'name' => 'Antihistamines',
         ]);
-        DrugCategory::insert([
+        DrugCategory::create([
             'pharmacy_id' => 4,
             'name' => 'Antipyretics',
         ]);
-        DrugCategory::insert([
+        DrugCategory::create([
             'pharmacy_id' => 4,
             'name' => 'Corticosteroids',
         ]);

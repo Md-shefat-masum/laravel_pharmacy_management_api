@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
             UserSupplierSeeder::class,
         ]);
 
-        User::insert([
+        User::create([
             'id' => 1,
             'first_name' => 'mr',
             'last_name' => 'super_admin',
@@ -65,7 +65,7 @@ class DatabaseSeeder extends Seeder
             'state' => 'bangladesh',
             'zip_code' => '1414',
         ]);
-        User::insert([
+        User::create([
             'id' => 2,
             'first_name' => 'mr',
             'last_name' => 'admin',
@@ -84,7 +84,7 @@ class DatabaseSeeder extends Seeder
             'state' => 'bangladesh',
             'zip_code' => '1414',
         ]);
-        User::insert([
+        User::create([
             'id' => 3,
             'first_name' => 'mr',
             'last_name' => 'doctor',
@@ -103,7 +103,7 @@ class DatabaseSeeder extends Seeder
             'state' => 'bangladesh',
             'zip_code' => '1414',
         ]);
-        User::insert([
+        User::create([
             'id' => 4,
             'first_name' => 'mr',
             'last_name' => 'pharmacy',
@@ -122,7 +122,7 @@ class DatabaseSeeder extends Seeder
             'state' => 'bangladesh',
             'zip_code' => '1414',
         ]);
-        User::insert([
+        User::create([
             'id' => 5,
             'first_name' => 'mr',
             'last_name' => 'consumer',
@@ -141,7 +141,7 @@ class DatabaseSeeder extends Seeder
             'state' => 'bangladesh',
             'zip_code' => '1414',
         ]);
-        User::insert([
+        User::create([
             'id' => 6,
             'first_name' => 'mr',
             'last_name' => 'delivery_man',

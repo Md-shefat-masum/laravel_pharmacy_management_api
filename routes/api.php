@@ -87,6 +87,10 @@ Route::group( ['prefix'=>'v1'],function(){
 });
 
 
-Route::post('/test-data',function(){
+Route::post('/v1/test-data',function(){
     return request()->all();
 });
+Route::get('/get',function(){
+    return 'ok';
+});
+

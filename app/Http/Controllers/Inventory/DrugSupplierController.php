@@ -6,14 +6,30 @@ use App\Http\Controllers\Controller;
 use App\Models\UserSupplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class DrugSupplierController extends Controller
 {
     public function all()
     {
-        $categories = UserSupplier::where('pharmacy_id', Auth::user()->id)->latest()->where('status', 1)->paginate(10);
-        return response()->json($categories, 200);
+        try {
+            $query = DB::table('user_suppliers');
+            if (request()->has('key') && strlen(request()->key) > 0) {
+                $query->where('supplier_name', 'LIKE', '%' . request()->key . '%');
+                // $query->where('id', request()->key)
+                //     ->orWhere('supplier_name', request()->key)
+                //     ->orWhere('company_name', request()->key)
+                //     ->orWhere('contact_number', request()->key)
+                //     ->orWhere('supplier_name', 'LIKE', '%' . request()->key . '%')
+                //     ->orWhere('company_name', 'LIKE', '%' . request()->key . '%')
+                //     ->orWhere('contact_number', 'LIKE', '%' . request()->key . '%');
+            }
+            $categories = $query->where('pharmacy_id', Auth::user()->id)->latest()->where('status', 1)->paginate(10);
+            return response()->json($categories, 200);
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
     }
 
     public function get(UserSupplier $category)
@@ -28,7 +44,7 @@ class DrugSupplierController extends Controller
             'company_name' => ['required', 'min:4'],
             'contact_number' => ['required', 'min:4'],
             'email' => ['required', 'min:4'],
-            'address' => ['required', ],
+            'address' => ['required',],
             // 'city' => ['required','min:4'],
         ]);
 
@@ -55,7 +71,7 @@ class DrugSupplierController extends Controller
             'company_name' => ['required', 'min:4'],
             'contact_number' => ['required', 'min:4'],
             'email' => ['required', 'min:4'],
-            'address' => ['required', ],
+            'address' => ['required',],
             // 'description' => ['required','min:4'],
         ]);
 

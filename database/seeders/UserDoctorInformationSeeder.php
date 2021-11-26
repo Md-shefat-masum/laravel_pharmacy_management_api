@@ -70,7 +70,7 @@ class UserDoctorInformationSeeder extends Seeder
 
         $language = ["english","chineese","japaneese","korean"];
 
-        UserDoctorInformaion::insert([
+        UserDoctorInformaion::create([
             'doctor_id' => 3,
             'speciality' => 'cardiologist',
             'education' => json_encode($education),

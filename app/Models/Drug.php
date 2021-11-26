@@ -64,4 +64,28 @@ class Drug extends Model
         }
     }
 
+    public function related_categories()
+    {
+        return $this->belongsToMany(DrugCategory::class)->withTimestamps();
+    }
+
+    public function related_drug_information()
+    {
+        return $this->belongsTo(DrugInformation::class)->withTimestamps();
+    }
+
+    public function related_drug_manufacturer()
+    {
+        return $this->belongsToMany(DrugManufacturer::class)->withTimestamps();
+    }
+
+    public function related_drug_storage()
+    {
+        return $this->belongsToMany(DrugStorage::class)->withTimestamps();
+    }
+
+    public function related_user_supplier()
+    {
+        return $this->belongsToMany(UserSupplier::class)->withTimestamps();
+    }
 }

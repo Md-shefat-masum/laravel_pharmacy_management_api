@@ -14,7 +14,7 @@ class UserSupplierSeeder extends Seeder
      */
     public function run()
     {
-        ModelsUserSupplier::insert([
+        ModelsUserSupplier::create([
             'pharmacy_id' => 4,
             'supplier_name' => 'AD Brook',
             'company_name' => 'Lab Aid',
@@ -23,7 +23,7 @@ class UserSupplierSeeder extends Seeder
             'address' => 'north america, street 4',
             'city' => 'dragon gate',
         ]);
-        ModelsUserSupplier::insert([
+        ModelsUserSupplier::create([
             'pharmacy_id' => 4,
             'supplier_name' => 'Tony stark',
             'company_name' => 'Stark Ltd',
@@ -32,7 +32,7 @@ class UserSupplierSeeder extends Seeder
             'address' => 'north america, street 4',
             'city' => 'dragon gate',
         ]);
-        ModelsUserSupplier::insert([
+        ModelsUserSupplier::create([
             'pharmacy_id' => 4,
             'supplier_name' => 'Nic Fury',
             'company_name' => 'Fury LSD Ltd',

@@ -15,7 +15,7 @@ class DrugInformationSeeder extends Seeder
      */
     public function run()
     {
-        DrugInformation::insert([
+        DrugInformation::create([
             'drug_id' => 1,
             'manufacturing_date' => '2018-01-14',
             'expiry_date' => '2034-01-14',

@@ -14,23 +14,23 @@ class DrugStorageSeeder extends Seeder
      */
     public function run()
     {
-        DrugStorage::insert([
+        DrugStorage::create([
             'pharmacy_id' => 4,
             'name' => 'Switch building',
         ]);
-        DrugStorage::insert([
+        DrugStorage::create([
             'pharmacy_id' => 4,
             'name' => 'North road 3rd floor',
         ]);
-        DrugStorage::insert([
+        DrugStorage::create([
             'pharmacy_id' => 4,
             'name' => 'East corneer 2nd room',
         ]);
-        DrugStorage::insert([
+        DrugStorage::create([
             'pharmacy_id' => 4,
             'name' => 'West corneer 1st room',
         ]);
-        DrugStorage::insert([
+        DrugStorage::create([
             'pharmacy_id' => 4,
             'name' => 'South corneer 1st room',
         ]);

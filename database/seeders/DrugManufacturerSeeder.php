@@ -14,35 +14,35 @@ class DrugManufacturerSeeder extends Seeder
      */
     public function run()
     {
-        DrugManufacturer::insert([
+        DrugManufacturer::create([
             'pharmacy_id' => 4,
             'name' => 'COSMIC PHARMA LIMITED',
         ]);
-        DrugManufacturer::insert([
+        DrugManufacturer::create([
             'pharmacy_id' => 4,
             'name' => 'Drug International Limited',
         ]);
-        DrugManufacturer::insert([
+        DrugManufacturer::create([
             'pharmacy_id' => 4,
             'name' => 'Gaco Pharmaceuticals',
         ]);
-        DrugManufacturer::insert([
+        DrugManufacturer::create([
             'pharmacy_id' => 4,
             'name' => 'General Pharma',
         ]);
-        DrugManufacturer::insert([
+        DrugManufacturer::create([
             'pharmacy_id' => 4,
             'name' => 'GlaxoSmithKline',
         ]);
-        DrugManufacturer::insert([
+        DrugManufacturer::create([
             'pharmacy_id' => 4,
             'name' => 'Globe Pharmaceuticals Ltd.',
         ]);
-        DrugManufacturer::insert([
+        DrugManufacturer::create([
             'pharmacy_id' => 4,
             'name' => 'Naafco Pharma Ltd.',
         ]);
-        DrugManufacturer::insert([
+        DrugManufacturer::create([
             'pharmacy_id' => 4,
             'name' => 'Navana Pharmaceuticals Ltd.',
         ]);

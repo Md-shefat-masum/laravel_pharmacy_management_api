@@ -1,0 +1,25 @@
+
+POST  http://127.0.0.1:8000/api/v1/user/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "pharmacy@gmail.com",
+    "password": "12345678"
+}
+
+###
+
+GET http://127.0.0.1:8000/api/v1/user/users HTTP/1.1
+Accept: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiODk0NGY5NTg0YmQ2YjhmMzk3OTlhYWU1M2YyY2FkZDM4MDVhOTBkZjljNzcyM2U3MTViMmQwMjkyNTA4ZDIxN2YxZTdjMTUzNjkwNGMwY2YiLCJpYXQiOjE2Mzc3NjkxMDIuNDM0MjcxLCJuYmYiOjE2Mzc3NjkxMDIuNDM0MjgsImV4cCI6MTY2OTMwNTEwMi40MjY0ODYsInN1YiI6IjQiLCJzY29wZXMiOltdfQ.lnJMSvunlDg8eg_5ELu7yTI_VJZsYZO_iTR8EVrnHPY-U4r7Bb1_BPPcn1Dxobs0RN9c_2jL9osNz3Cq4FtchKbDJ3R0bZCdHNeBDiEBNv_TPBLkIssbvpoevUpniqp9S93D8nF6hWmWwP_IG2jh4nIOWpgrLSQC4osIX8bDZrUGGd39MZ0tkOJw372pIVi2gYsb_m3hrgD_o6zMYZwKC4fydSa3gayKLkY9TyYsmAImWd_mTZVjeLsUdoraO65DjehigQ0V-sPtQyvIrgemvcF74X5Ta-cK3fOZROYzjUtRVTvHUdxgzMuyLyEmr6Bdj4S2jPL9IwW0vTpt9ybrXERLnUTTH78ZGRnAcAScIjQgQOKZGWw9Yif4GBA9KS_iSJAmdam1zwyMcB_uopcIGRl3YB4A37DScXb9-JkXFi3V2pIfmhbR3S0zJJAzoQOwrzhYV-fE1k1EWsYYKgigfmyD6PiEe59lFnhlwxyYL6e2rUkDTgTdYRFh5XIjJ5BV2YAEJFwMCWXK8A7Ye-kHffSsQfidWUU8qLAxNUV37DkZcEQTg7HebyopZYic6ZJCH0xZusk8HIRyqUXx6ZsjgRjS5Owg9kjzC_vmBnjD2d3GgXNYUV8c9Tr9fGUl-n9yNo_W1svFBDvvewDYQWL9-b9N4k85Jan5FJfVxDPtOX0
+
+
+###
+
+POST  https://jsonplaceholder.typicode.com/users HTTP/1.1
+content-type: application/json
+
+{
+    "name": "sample",
+    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+}
