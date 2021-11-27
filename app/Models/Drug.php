@@ -8,24 +8,60 @@ use Illuminate\Database\Eloquent\Model;
 class Drug extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
     protected $appends = [
-        'photoURL',
         'manufacture_date',
         'expiry_date',
         'quantity',
         'date_of_entry',
-        // 'total_sale',
-        // 'total_income',
+        'full_photo_url',
+
+        'indication',
+        'preparation',
+        // 'dosage_and_administration',
+
         // 'category_name',
         // 'storage_location_name',
         // 'manufacturer_name',
     ];
 
-    public function getPhotoURLAttribute()
+    public static function scopeActive($query)
     {
-        return url('/') . '/' . $this->photo;
+        return $query->where('status', 1);
+    }
+
+    public function getFullPhotoUrlAttribute()
+    {
+        return strlen($this->photoURL) > 0 ? $this->photoURL : url('/') . '/' . $this->photo;
+    }
+
+    public function getIndicationAttribute()
+    {
+        if (DrugInformation::where('drug_id', $this->id)->exists()) {
+            return DrugInformation::where('drug_id', $this->id)->first()->indication;
+        } else {
+            return '';
+        }
+    }
+
+    public function getDosageAndAdministrationAttribute()
+    {
+        if (DrugInformation::where('drug_id', $this->id)->exists()) {
+            return DrugInformation::where('drug_id', $this->id)->first()->dosage_and_administration;
+        } else {
+            return '';
+        }
+    }
+
+    public function getPreparationAttribute()
+    {
+        if (DrugInformation::where('drug_id', $this->id)->exists()) {
+            return DrugInformation::where('drug_id', $this->id)->first()->preparation;
+        } else {
+            return '';
+        }
     }
 
     public function getManufactureDateAttribute()

@@ -6,6 +6,7 @@ use App\Models\Drug;
 use App\Models\DrugCategory;
 use App\Models\DrugInformation;
 use App\Models\DrugManufacturer;
+use App\Models\DrugQtyLog;
 use App\Models\DrugStorage;
 use App\Models\User;
 use App\Models\UserDoctorInformaion;
@@ -33,6 +34,7 @@ class DatabaseSeeder extends Seeder
         DrugCategory::truncate();
         DrugManufacturer::truncate();
         DrugStorage::truncate();
+        DrugQtyLog::truncate();
 
         $this->call([
             DrugCategorySeeder::class,
@@ -44,6 +46,7 @@ class DatabaseSeeder extends Seeder
             UserDoctorInformationSeeder::class,
             UserRoleSeeder::class,
             UserSupplierSeeder::class,
+            DrugQtyLogSeeder::class,
         ]);
 
         User::create([

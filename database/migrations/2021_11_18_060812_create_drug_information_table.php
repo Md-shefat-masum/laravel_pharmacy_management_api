@@ -20,6 +20,9 @@ class CreateDrugInformationTable extends Migration
             $table->string('expiry_date',100)->nullable();
             $table->bigInteger('quantity')->nullable();
             $table->string('date_of_entry',20)->nullable();
+            $table->text('indication')->nullable();
+            $table->longText('dosage_and_administration')->nullable();
+            $table->text('preparation')->nullable();
 
             $table->string('creator',100)->nullable();
             $table->string('slug',100)->nullable();
