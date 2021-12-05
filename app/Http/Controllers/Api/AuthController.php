@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ForgetPassword;
+use App\Models\DoctorSpeciality;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -212,7 +213,7 @@ class AuthController extends Controller
 
     public function users()
     {
-        $users = User::get();
+        $users = User::where('status','active')->get();
         return response()->json($users);
     }
 
@@ -229,8 +230,45 @@ class AuthController extends Controller
             'email',
             'contact_number',
             'street'
-        ])->get();
+        ])->where('status','active')->get();
 
         return response()->json($locations,200);
+    }
+
+    public function doctor_location()
+    {
+        $locations = User::where('role_serial',3)->select([
+            'id',
+            'lat',
+            'lng',
+            'photo',
+            'user_name',
+            'first_name',
+            'last_name',
+            'email',
+            'contact_number',
+            'street',
+            'role_serial'
+        ])
+        ->where('status','active')->get();
+
+        return response()->json($locations,200);
+    }
+
+    public function doctor_speciality()
+    {
+        $specialities = DoctorSpeciality::where("status",1)->get();
+        return response()->json($specialities,200);
+    }
+
+    public function specialist_doctors($designation_id)
+    {
+        $speciality = DoctorSpeciality::where('id',$designation_id)
+                                ->where("status",1)
+                                ->with([
+                                    'doctors:id,role_serial,first_name,last_name,user_name,photo,lat,lng,street,zip_code,email,contact_number'
+                                ])
+                                ->first();
+        return response()->json($speciality,200);
     }
 }

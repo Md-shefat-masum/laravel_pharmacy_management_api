@@ -14,16 +14,35 @@ class User extends Authenticatable
 
     protected $appends = [
         'photoURL',
-        'displayName'
+        'displayName',
+        'designation',
+        'doctor_info',
     ];
 
     public function getPhotoURLAttribute($value)
     {
-        return url('/').'/'.$this->photo;
+        return url('/') . '/' . $this->photo;
     }
-    public function getDisplayNameAttribute($value)
+    public function getDisplayNameAttribute()
     {
         return $this->user_name;
+    }
+    public function getDesignationAttribute()
+    {
+        if ($this->role_serial == 3) {
+            return $this->doctor_designation()->get();
+        } else {
+            return [];
+        }
+    }
+    public function getDoctorInfoAttribute()
+    {
+        if ($this->role_serial == 3) {
+            return UserDoctorInformaion::where('doctor_id', $this->id)->exists() ?
+                UserDoctorInformaion::where('doctor_id', $this->id)->first() : [];
+        } else {
+            return [];
+        }
     }
 
     /**
@@ -60,7 +79,16 @@ class User extends Authenticatable
 
     public function user_role()
     {
-        return $this->belongsTo(UserRole::class,'role_serial','role_serial');
+        return $this->belongsTo(UserRole::class, 'role_serial', 'role_serial');
     }
 
+    public function doctor_info()
+    {
+        return $this->belongsTo(UserDoctorInformaion::class);
+    }
+
+    public function doctor_designation()
+    {
+        return $this->belongsToMany(DoctorSpeciality::class);
+    }
 }

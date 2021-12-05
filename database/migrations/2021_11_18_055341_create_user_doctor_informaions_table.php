@@ -16,7 +16,7 @@ class CreateUserDoctorInformaionsTable extends Migration
         Schema::create('user_doctor_informaions', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('doctor_id')->nullable();
-            $table->string('speciality',100)->nullable();
+            $table->float('doctor_charge')->nullable();
             $table->text('education')->nullable();
             $table->text('experience')->nullable();
             $table->text('schedule')->nullable();

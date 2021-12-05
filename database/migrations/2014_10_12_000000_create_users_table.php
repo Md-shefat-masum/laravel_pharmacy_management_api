@@ -15,23 +15,23 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('user_name')->unique();
-            $table->string('role_serial');
+            $table->string('first_name',30);
+            $table->string('last_name',30);
+            $table->string('user_name',30)->unique();
+            $table->bigInteger('role_serial')->nullable();
             $table->string('email')->unique();
-            $table->string('contact_number')->unique();
-            $table->string('lat')->nullable();
-            $table->string('lng')->nullable();
-            $table->string('photo')->default('/avatar.png');
-            $table->string('dob')->nullable();
-            $table->string('street')->nullable();
-            $table->string('city')->nullable();
-            $table->string('country')->nullable();
-            $table->string('state')->nullable();
-            $table->string('zip_code')->nullable();
+            $table->string('contact_number',20)->unique();
+            $table->double('lat')->nullable();
+            $table->double('lng')->nullable();
+            $table->string('photo',100)->default('/avatar.png');
+            $table->string('dob',30)->nullable();
+            $table->string('street',100)->nullable();
+            $table->string('city',50)->nullable();
+            $table->string('country',50)->nullable();
+            $table->string('state',50)->nullable();
+            $table->string('zip_code',100)->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password',100);
             $table->rememberToken();
 
             $table->bigInteger('creator')->nullable();

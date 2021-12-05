@@ -33,9 +33,13 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('/check-auth', 'AuthController@check_auth');
         Route::get('/users', 'AuthController@users');
         Route::get('/pharmacy-location', 'AuthController@pharmacy_location');
-        Route::get('/logout', 'AuthController@logout');
+        Route::get('/doctor-location', 'AuthController@doctor_location');
+        Route::get('/doctor-speciality', 'AuthController@doctor_speciality');
+        Route::get('/specialist-doctors/{designation_id}', 'AuthController@specialist_doctors');
+
         Route::post('/update-profile', 'AuthController@update_profile');
         Route::post('/update-profile-pic', 'AuthController@update_profile_pic');
+        Route::get('/logout', 'AuthController@logout');
     });
 
     Route::group(['prefix' => '/inventory', 'middleware' => ['auth:api'], 'namespace' => 'Inventory'], function () {
@@ -87,6 +91,10 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('/details/{order}', 'OrderController@details');
 
         Route::post('/test','OrderController@test');
+    });
+    Route::group(['prefix' => '/appoinment', 'middleware' => ['auth:api'], 'namespace' => 'Order'], function () {
+        Route::get('/user-appoinments','AppoinmentController@user_appoinments');
+        Route::post('/store','AppoinmentController@store');
     });
 
     // public route

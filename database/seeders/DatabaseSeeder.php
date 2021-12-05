@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\DoctorAppoinment;
+use App\Models\DoctorSpeciality;
 use App\Models\Drug;
 use App\Models\DrugCategory;
 use App\Models\DrugInformation;
@@ -20,6 +22,7 @@ use App\Models\UserDoctorInformaion;
 use App\Models\UserRole;
 use App\Models\UserSupplier;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -49,19 +52,23 @@ class DatabaseSeeder extends Seeder
         OrderPrescriptionImage::truncate();
         OrderBillingAddress::truncate();
         OrderShippingAddress::truncate();
+        DoctorSpeciality::truncate();
+        DoctorAppoinment::truncate();
+        DB::table('doctor_speciality_user')->truncate();
 
         $this->call([
+            DoctorSeeder::class,
             DrugCategorySeeder::class,
             DrugInformationSeeder::class,
             DrugManufacturerSeeder::class,
             DrugSeeder::class,
             DrugStorageSeeder::class,
             UserDoctorInformationSeeder::class,
-            UserDoctorInformationSeeder::class,
             UserRoleSeeder::class,
             UserSupplierSeeder::class,
             DrugQtyLogSeeder::class,
             OrderSeeder::class,
+            DoctorAppoinmentSeeder::class,
         ]);
 
         User::create([
@@ -103,6 +110,7 @@ class DatabaseSeeder extends Seeder
             'state' => 'bangladesh',
             'zip_code' => '1414',
         ]);
+
         User::create([
             'id' => 3,
             'first_name' => 'mr',
@@ -113,8 +121,8 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('12345678'),
 
             'contact_number' => '+9342325325',
-            'lat' => '25.778522',
-            'lng' => '88.897377',
+            'lat' => '23.71557',
+            'lng' => '90.432785',
             'dob' => '1978-02-14',
             'street' => 'faruk road 14/A',
             'city' => 'dhaka',
@@ -122,6 +130,7 @@ class DatabaseSeeder extends Seeder
             'state' => 'bangladesh',
             'zip_code' => '1414',
         ]);
+
         User::create([
             'id' => 4,
             'first_name' => 'mr',
@@ -132,8 +141,8 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('12345678'),
 
             'contact_number' => '+9342325326',
-            'lat' => '26.335377',
-            'lng' => '88.551697',
+            'lat' => '23.71557',
+            'lng' => '90.432785',
             'dob' => '1978-02-14',
             'street' => 'faruk road 14/A',
             'city' => 'dhaka',
@@ -141,6 +150,7 @@ class DatabaseSeeder extends Seeder
             'state' => 'bangladesh',
             'zip_code' => '1414',
         ]);
+
         User::create([
             'id' => 5,
             'first_name' => 'mr',
@@ -151,8 +161,8 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('12345678'),
 
             'contact_number' => '+9342325327',
-            'lat' => '22.723406',
-            'lng' => '89.075127',
+            'lat' => '23.708981',
+            'lng' => '90.436921',
             'dob' => '1978-02-14',
             'street' => 'faruk road 14/A',
             'city' => 'dhaka',
@@ -160,6 +170,7 @@ class DatabaseSeeder extends Seeder
             'state' => 'bangladesh',
             'zip_code' => '1414',
         ]);
+
         User::create([
             'id' => 6,
             'first_name' => 'mr',
@@ -223,6 +234,28 @@ class DatabaseSeeder extends Seeder
                 'contact_number' => '+934232532' . rand(4000, 9999) . $i,
                 // 'lat' => $lats[$i]['lat'],
                 // 'lng' => $lats[$i]['lng'],
+                'lat' => "23.71" . rand(1000, 9999),
+                'lng' => "90.43" . rand(1000, 9999),
+                'dob' => '1978-02-14',
+                'street' => 'faruk road 14/A',
+                'city' => 'dhaka',
+                'country' => 'bangladesh',
+                'state' => 'bangladesh',
+                'zip_code' => '1414',
+            ]);
+        }
+        for ($i = 0; $i < 10; $i++) {
+            User::create([
+                'first_name' => 'mr',
+                'last_name' => 'doctor'. ($i + 1),
+                'user_name' => 'doctor'. ($i + 1),
+                'email' => 'doctor' . ($i + 1) . '@gmail.com',
+                'role_serial' => 3,
+                'password' => Hash::make('12345678'),
+
+                'contact_number' => '+934232532' . rand(4000, 9999) . $i,
+                // 'lat' => '25.778522',
+                // 'lng' => '88.897377',
                 'lat' => "23.71" . rand(1000, 9999),
                 'lng' => "90.43" . rand(1000, 9999),
                 'dob' => '1978-02-14',

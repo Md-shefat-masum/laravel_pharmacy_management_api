@@ -72,7 +72,7 @@ class UserDoctorInformationSeeder extends Seeder
 
         UserDoctorInformaion::create([
             'doctor_id' => 3,
-            'speciality' => 'cardiologist',
+            'doctor_charge' => rand(10,30),
             'education' => json_encode($education),
             'experience' => json_encode($experience),
             'schedule' => json_encode($schedule),
@@ -83,5 +83,21 @@ class UserDoctorInformationSeeder extends Seeder
             'prof_membership' => '',
             'created_at' => Carbon::now()->toDateTimeString()
         ]);
+
+        for ($i=17; $i < 26; $i++) {
+            UserDoctorInformaion::create([
+                'doctor_id' => $i,
+                'doctor_charge' => rand(10,30),
+                'education' => json_encode($education),
+                'experience' => json_encode($experience),
+                'schedule' => json_encode($schedule),
+                'supported_insurance' => '#ABCSTSC',
+                'professor_membership_id' => '#ABCSTSC',
+                'licence_no' => '#ABCSTSC',
+                'language_spoken' => json_encode($language),
+                'prof_membership' => '',
+                'created_at' => Carbon::now()->toDateTimeString()
+            ]);
+        }
     }
 }
