@@ -25,6 +25,8 @@ class DrugSeeder extends Seeder
             'dangerous_level' => 'low',
             'no_of_unit_in_package' => 10,
             'unit_price' => rand(50,200),
+            'sales_price' => rand(50,200),
+            'sales_tax' => rand(5,12),
         ]);
         $drug->related_categories()->attach([rand(1,3),rand(4,5)]);
         $drug->related_drug_manufacturer()->attach([rand(1,3),rand(4,5)]);
@@ -43,6 +45,8 @@ class DrugSeeder extends Seeder
             'dangerous_level' => 'low',
             'no_of_unit_in_package' => 10,
             'unit_price' => rand(50,200),
+            'sales_price' => rand(50,200),
+            'sales_tax' => rand(5,12),
         ]);
         $drug->related_categories()->attach([rand(1,3),rand(4,5)]);
         $drug->related_drug_manufacturer()->attach([rand(1,3),rand(4,5)]);
@@ -59,6 +63,8 @@ class DrugSeeder extends Seeder
             'dangerous_level' => 'low',
             'no_of_unit_in_package' => 10,
             'unit_price' => rand(50,200),
+            'sales_price' => rand(50,200),
+            'sales_tax' => rand(5,12),
         ]);
         $drug->related_categories()->attach([rand(1,3),rand(4,5)]);
         $drug->related_drug_manufacturer()->attach([rand(1,3),rand(4,5)]);
@@ -75,6 +81,8 @@ class DrugSeeder extends Seeder
             'dangerous_level' => 'low',
             'no_of_unit_in_package' => 10,
             'unit_price' => rand(50,200),
+            'sales_price' => rand(50,200),
+            'sales_tax' => rand(5,12),
         ]);
         $drug->related_categories()->attach([rand(1,3),rand(4,5)]);
         $drug->related_drug_manufacturer()->attach([rand(1,3),rand(4,5)]);
@@ -91,6 +99,8 @@ class DrugSeeder extends Seeder
             'dangerous_level' => 'low',
             'no_of_unit_in_package' => 10,
             'unit_price' => rand(50,200),
+            'sales_price' => rand(50,200),
+            'sales_tax' => rand(5,12),
         ]);
         $drug->related_categories()->attach([rand(1,3),rand(4,5)]);
         $drug->related_drug_manufacturer()->attach([rand(1,3),rand(4,5)]);

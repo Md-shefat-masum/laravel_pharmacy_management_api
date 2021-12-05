@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrderSalesLogsTable extends Migration
+class CreateOrderPrescriptionImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateOrderSalesLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('order_sales_logs', function (Blueprint $table) {
+        Schema::create('order_prescription_images', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('order_id')->nullable();
-            $table->bigInteger('product_id')->nullable();
-            $table->bigInteger('qty')->nullable();
-            $table->string('action_type',100)->nullable();
+            $table->bigInteger('pharmacy_id')->nullable();
+            $table->string('image',100)->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateOrderSalesLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_sales_logs');
+        Schema::dropIfExists('order_prescription_images');
     }
 }

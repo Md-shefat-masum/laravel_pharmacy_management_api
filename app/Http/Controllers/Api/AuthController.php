@@ -215,4 +215,22 @@ class AuthController extends Controller
         $users = User::get();
         return response()->json($users);
     }
+
+    public function pharmacy_location()
+    {
+        $locations = User::where('role_serial',4)->select([
+            'id',
+            'lat',
+            'lng',
+            'photo',
+            'user_name',
+            'first_name',
+            'last_name',
+            'email',
+            'contact_number',
+            'street'
+        ])->get();
+
+        return response()->json($locations,200);
+    }
 }

@@ -8,6 +8,13 @@ use App\Models\DrugInformation;
 use App\Models\DrugManufacturer;
 use App\Models\DrugQtyLog;
 use App\Models\DrugStorage;
+use App\Models\Order;
+use App\Models\OrderBillingAddress;
+use App\Models\OrderDetails;
+use App\Models\OrderPayment;
+use App\Models\OrderPrescriptionImage;
+use App\Models\OrderSalesLog;
+use App\Models\OrderShippingAddress;
 use App\Models\User;
 use App\Models\UserDoctorInformaion;
 use App\Models\UserRole;
@@ -35,6 +42,13 @@ class DatabaseSeeder extends Seeder
         DrugManufacturer::truncate();
         DrugStorage::truncate();
         DrugQtyLog::truncate();
+        Order::truncate();
+        OrderDetails::truncate();
+        OrderPayment::truncate();
+        OrderSalesLog::truncate();
+        OrderPrescriptionImage::truncate();
+        OrderBillingAddress::truncate();
+        OrderShippingAddress::truncate();
 
         $this->call([
             DrugCategorySeeder::class,
@@ -47,6 +61,7 @@ class DatabaseSeeder extends Seeder
             UserRoleSeeder::class,
             UserSupplierSeeder::class,
             DrugQtyLogSeeder::class,
+            OrderSeeder::class,
         ]);
 
         User::create([
@@ -68,6 +83,7 @@ class DatabaseSeeder extends Seeder
             'state' => 'bangladesh',
             'zip_code' => '1414',
         ]);
+
         User::create([
             'id' => 2,
             'first_name' => 'mr',
@@ -163,5 +179,59 @@ class DatabaseSeeder extends Seeder
             'state' => 'bangladesh',
             'zip_code' => '1414',
         ]);
+
+        // more pharmacy
+        // {
+        //     id: 1,
+        //     name: "Laj pharma",
+        //     position: { lat: 23.710121, lng: 90.434302 },
+        //     location: "Jatrabari",
+        // },
+        // {
+        //     id: 2,
+        //     name: "Lab aid",
+        //     position: { lat: 23.712046, lng: 90.429584 },
+        //     location: 'Dhania'
+        // },
+        // {
+        //     id: 3,
+        //     name: "Best buy",
+        //     position: { lat: 23.707842, lng: 90.439409 },
+        //     location: 'Dolaipar'
+        // },
+        // {
+        //     id: 4,
+        //     name: "Haque pharma",
+        //     position: { lat: 23.702655, lng: 90.435249 },
+        //     location: 'Doyagonj'
+        // }
+        $lats = [
+            ["lat" => 23.710121, "lng" => 90.434302],
+            ["lat" => 23.707842, "lng" => 90.429584],
+            ["lat" => 23.707842, "lng" => 90.439409],
+            ["lat" => 23.702655, "lng" => 90.435249],
+        ];
+        for ($i = 0; $i < 10; $i++) {
+            User::create([
+                'first_name' => 'mr',
+                'last_name' => 'pharmacy' . ($i + 1),
+                'user_name' => 'pharmacy' . ($i + 1),
+                'email' => 'pharmacy' . ($i + 1) . '@gmail.com',
+                'role_serial' => 4,
+                'password' => Hash::make('12345678'),
+
+                'contact_number' => '+934232532' . rand(4000, 9999) . $i,
+                // 'lat' => $lats[$i]['lat'],
+                // 'lng' => $lats[$i]['lng'],
+                'lat' => "23.71" . rand(1000, 9999),
+                'lng' => "90.43" . rand(1000, 9999),
+                'dob' => '1978-02-14',
+                'street' => 'faruk road 14/A',
+                'city' => 'dhaka',
+                'country' => 'bangladesh',
+                'state' => 'bangladesh',
+                'zip_code' => '1414',
+            ]);
+        }
     }
 }

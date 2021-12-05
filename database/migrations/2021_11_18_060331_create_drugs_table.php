@@ -24,7 +24,9 @@ class CreateDrugsTable extends Migration
             $table->integer('storage_temperature')->nullable();
             $table->string('dangerous_level', 100)->nullable();
             $table->string('no_of_unit_in_package', 100)->nullable();
-            $table->string('unit_price', 100)->nullable();
+            $table->double('unit_price')->nullable();
+            $table->double('sales_price')->nullable();
+            $table->double('sales_tax')->nullable();
 
             $table->string('creator', 100)->nullable();
             $table->string('slug', 100)->nullable();

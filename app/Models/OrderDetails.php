@@ -9,4 +9,9 @@ class OrderDetails extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function drug_details()
+    {
+        return $this->belongsTo(Drug::class, 'product_id', 'id');
+    }
 }

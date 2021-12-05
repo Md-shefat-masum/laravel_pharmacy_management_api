@@ -32,6 +32,7 @@ Route::group(['prefix' => 'v1'], function () {
     Route::group(['prefix' => '/user', 'middleware' => ['auth:api'], 'namespace' => 'Api'], function () {
         Route::get('/check-auth', 'AuthController@check_auth');
         Route::get('/users', 'AuthController@users');
+        Route::get('/pharmacy-location', 'AuthController@pharmacy_location');
         Route::get('/logout', 'AuthController@logout');
         Route::post('/update-profile', 'AuthController@update_profile');
         Route::post('/update-profile-pic', 'AuthController@update_profile_pic');
@@ -79,9 +80,13 @@ Route::group(['prefix' => 'v1'], function () {
         });
     });
 
+    Route::group(['prefix' => '/order', 'middleware' => ['auth:api'], 'namespace' => 'Order'], function () {
+        Route::post('/create', 'OrderController@saveorder');
+        Route::post('/create-prescription-order', 'OrderController@create_prescription_order');
+        Route::get('/customer-orders', 'OrderController@customer_orders');
+        Route::get('/details/{order}', 'OrderController@details');
 
-    Route::group(['prefix' => '/consumer', 'middleware' => ['auth:api'], 'namespace' => 'Consumer'], function () {
-        Route::get('/test', 'ConsumerController@get_data');
+        Route::post('/test','OrderController@test');
     });
 
     // public route

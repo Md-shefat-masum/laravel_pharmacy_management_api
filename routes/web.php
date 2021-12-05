@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -35,8 +36,9 @@ Route::get('/drug-list', 'Inventory\DrugController@drug_list');
 
 
 Route::get('/test_data_api', function () {
-    $response = Http::get('https://openlibrary.org/search.json?q=web');
-    dd($response->json()['docs']);
+    // $response = Http::get('https://openlibrary.org/search.json?q=web');
+    // dd($response->json()['docs']);
+    // dd(Hash::make('ok@2009'));
 });
 
 Route::get('/data-reload', function () {

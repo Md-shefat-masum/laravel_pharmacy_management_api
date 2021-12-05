@@ -20,7 +20,7 @@ class CreateOrdersTable extends Migration
             $table->bigInteger('pharmacy_id')->nullable();
             $table->double('order_total')->nullable();
             $table->double('shipping_charge')->nullable();
-            $table->double('coupon_code')->nullable();
+            $table->string('coupon_code',100)->nullable();
             $table->double('coupon_charge')->nullable();
             $table->tinyInteger('payment_status')->default(0);
             $table->string('order_status',50)->default('pending');

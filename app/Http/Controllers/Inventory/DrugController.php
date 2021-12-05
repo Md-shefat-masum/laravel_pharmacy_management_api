@@ -88,6 +88,8 @@ class DrugController extends Controller
             'dangerous_level',
             'no_of_unit_in_package',
             'unit_price',
+            'sales_price',
+            'sales_tax',
         ]);
 
         try {
