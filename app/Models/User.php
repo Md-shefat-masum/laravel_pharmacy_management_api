@@ -91,4 +91,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(DoctorSpeciality::class);
     }
+    public function doctor_assistance()
+    {
+        return $this->hasMany(DoctorAssistance::class,'doctor_id','id');
+    }
 }

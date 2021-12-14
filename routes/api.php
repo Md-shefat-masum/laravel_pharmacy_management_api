@@ -36,6 +36,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('/doctor-location', 'AuthController@doctor_location');
         Route::get('/doctor-speciality', 'AuthController@doctor_speciality');
         Route::get('/specialist-doctors/{designation_id}', 'AuthController@specialist_doctors');
+        Route::get('/doctor-shedule-info-by-date','AuthController@doctor_schedule_info_by_date');
 
         Route::post('/update-profile', 'AuthController@update_profile');
         Route::post('/update-profile-pic', 'AuthController@update_profile_pic');
@@ -90,10 +91,18 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('/customer-orders', 'OrderController@customer_orders');
         Route::get('/details/{order}', 'OrderController@details');
 
+        Route::post('/customer-order-payment', 'OrderController@customer_order_payment');
+
         Route::post('/test','OrderController@test');
     });
     Route::group(['prefix' => '/appoinment', 'middleware' => ['auth:api'], 'namespace' => 'Order'], function () {
         Route::get('/user-appoinments','AppoinmentController@user_appoinments');
+        Route::get('/get-user-appoinment/{id}','AppoinmentController@get_user_appoinment');
+
+        Route::get('/doctor-appoinments','AppoinmentController@doctor_appoinments');
+        Route::post('/doctor-all-appoinments-by-date','AppoinmentController@doctor_all_appoinments_by_date');
+        Route::get('/get-doctor-appoinment/{id}','AppoinmentController@get_doctor_appoinment');
+
         Route::post('/store','AppoinmentController@store');
     });
 

@@ -20,6 +20,7 @@ class CreateDoctorAppoinmentsTable extends Migration
             $table->string('date',10)->nullable();
             $table->string('start_time',10)->nullable();
             $table->string('end_time',10)->nullable();
+            $table->text('appoinment_link')->nullable();
             $table->string('appoinment_status',20)->default('pending');
 
             $table->string('payment_id',100)->nullable();

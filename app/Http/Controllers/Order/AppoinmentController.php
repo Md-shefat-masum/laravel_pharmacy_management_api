@@ -27,11 +27,71 @@ class AppoinmentController extends Controller
 
     public function user_appoinments()
     {
-        $appoinments = DoctorAppoinment::where('consumer_id',Auth::user()->id)->with([
+        $appoinments = DoctorAppoinment::where('consumer_id', Auth::user()->id)->with([
             'doctor:id,user_name',
             'consumer:id,user_name',
         ])->latest()->paginate(8);
-        return response()->json($appoinments,200);
+        return response()->json($appoinments, 200);
+    }
+
+    public function doctor_appoinments()
+    {
+        $appoinments = DoctorAppoinment::where('doctor_id', Auth::user()->id)->with([
+            'doctor:id,user_name',
+            'consumer:id,user_name',
+        ])->latest()->paginate(8);
+        return response()->json($appoinments, 200);
+    }
+
+    public function get_user_appoinment($id)
+    {
+        $appoinment = DoctorAppoinment::where('consumer_id', Auth::user()->id)->where('id', $id)->with([
+            // 'doctor:id,user_name,photo',
+            'doctor' => function ($query) {
+                $query->select(['id', 'user_name', 'photo', 'role_serial', 'email', 'contact_number']);
+                $query->with(['doctor_assistance:id,doctor_id,name,mobile_number,telephone_number']);
+            },
+            'consumer:id,user_name',
+        ])->first();
+        return response()->json($appoinment, 200);
+    }
+
+    public function get_doctor_appoinment($id)
+    {
+        $appoinment = DoctorAppoinment::where('doctor_id', Auth::user()->id)->where('id', $id)->with([
+            // 'doctor:id,user_name,photo',
+            'doctor' => function ($query) {
+                $query->select(['id', 'user_name', 'photo', 'role_serial', 'email', 'contact_number']);
+                $query->with(['doctor_assistance:id,doctor_id,name,mobile_number,telephone_number']);
+            },
+            'consumer:id,user_name,photo,role_serial,email,contact_number',
+        ])->first();
+        return response()->json($appoinment, 200);
+    }
+
+    public function doctor_all_appoinments_by_date()
+    {
+        $date = Carbon::parse(request()->date);
+        session()->put('user_appoinment_date', $date);
+        $appoinment = DoctorAppoinment::where('doctor_id', Auth::user()->id)->whereDate('date', $date)->with([
+            // 'doctor:id,user_name,photo',
+            'doctor' => function ($query) {
+                $query->select(['id', 'user_name', 'photo', 'role_serial', 'email', 'contact_number']);
+                $query->with(['doctor_assistance:id,doctor_id,name,mobile_number,telephone_number']);
+            },
+            'consumer:id,user_name,photo,role_serial,email,contact_number',
+        ])->get()->each(function ($items) {
+            return $items->setAppends([
+                'total_time',
+                'time_diff_from_doctor_start_time',
+                'time_range',
+                'formatted_start_time',
+                'formatted_end_time',
+                'time_slot',
+            ]);
+        });
+
+        return response()->json($appoinment, 200);
     }
 
     public function store(Request $request)
@@ -39,7 +99,7 @@ class AppoinmentController extends Controller
         $validator = Validator::make($request->all(), [
             'doctor_id' => ['required'],
             'date' => ['required'],
-            'start_time' => ['required'],
+            // 'start_time' => ['required'],
             'card_number' => ['required'],
             'month' => ['required'],
             'cvc' => ['required'],
@@ -67,7 +127,7 @@ class AppoinmentController extends Controller
         }
 
         if ((isset($payemnt['status']) &&  $payemnt['status'] == 'failed') || !$payemnt) {
-            $err_message = 'transaction failed';
+            $err_message = 'transaction failed. Please check card info and try again.';
             // $err = $payemnt['errros']['message'];
             // foreach ($err as $item) {
             //     $err_message .= $item[0].', ';

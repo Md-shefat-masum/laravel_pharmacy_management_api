@@ -26,16 +26,16 @@ class Order extends Model
 
     public function shipping_address()
     {
-        return $this->belongsTo(OrderShippingAddress::class, 'id');
+        return $this->hasOne(OrderShippingAddress::class, 'order_id');
     }
 
     public function billing_address()
     {
-        return $this->belongsTo(OrderBillingAddress::class, 'id');
+        return $this->hasOne(OrderBillingAddress::class, 'order_id');
     }
     public function payment_details()
     {
-        return $this->belongsTo(OrderPayment::class, 'id');
+        return $this->hasOne(OrderPayment::class, 'order_id');
     }
 
     public function order_details()

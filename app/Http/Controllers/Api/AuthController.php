@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Mail\ForgetPassword;
 use App\Models\DoctorSpeciality;
 use App\Models\User;
+use App\Models\UserDoctorInformaion;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -253,6 +255,14 @@ class AuthController extends Controller
         ->where('status','active')->get();
 
         return response()->json($locations,200);
+    }
+
+    public function doctor_schedule_info_by_date()
+    {
+        $date = Carbon::parse(request()->date);
+        session()->put('user_appoinment_date',$date);
+        $user_info = UserDoctorInformaion::where('doctor_id',Auth::user()->id)->first();
+        return response()->json($user_info, 200);
     }
 
     public function doctor_speciality()
