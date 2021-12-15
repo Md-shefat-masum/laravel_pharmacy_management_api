@@ -104,6 +104,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('/get-doctor-appoinment/{id}','AppoinmentController@get_doctor_appoinment');
 
         Route::post('/store','AppoinmentController@store');
+        Route::post('/set-shedule-for-consumer','AppoinmentController@set_schedule_for_consumer');
     });
 
     // public route

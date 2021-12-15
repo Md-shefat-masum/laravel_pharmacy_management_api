@@ -48,10 +48,10 @@ class AppoinmentController extends Controller
         $appoinment = DoctorAppoinment::where('consumer_id', Auth::user()->id)->where('id', $id)->with([
             // 'doctor:id,user_name,photo',
             'doctor' => function ($query) {
-                $query->select(['id', 'user_name', 'photo', 'role_serial', 'email', 'contact_number']);
+                $query->select(['id', 'user_name', 'photo', 'role_serial', 'dob', 'email', 'contact_number']);
                 $query->with(['doctor_assistance:id,doctor_id,name,mobile_number,telephone_number']);
             },
-            'consumer:id,user_name',
+            'consumer:id,dob,user_name',
         ])->first();
         return response()->json($appoinment, 200);
     }
@@ -61,10 +61,10 @@ class AppoinmentController extends Controller
         $appoinment = DoctorAppoinment::where('doctor_id', Auth::user()->id)->where('id', $id)->with([
             // 'doctor:id,user_name,photo',
             'doctor' => function ($query) {
-                $query->select(['id', 'user_name', 'photo', 'role_serial', 'email', 'contact_number']);
+                $query->select(['id', 'user_name', 'photo', 'role_serial','street', 'city', 'country', 'dob', 'email', 'contact_number']);
                 $query->with(['doctor_assistance:id,doctor_id,name,mobile_number,telephone_number']);
             },
-            'consumer:id,user_name,photo,role_serial,email,contact_number',
+            'consumer:id,user_name,photo,dob,role_serial,email,contact_number',
         ])->first();
         return response()->json($appoinment, 200);
     }
@@ -179,5 +179,93 @@ class AppoinmentController extends Controller
         ]);
 
         return $response->json();
+    }
+
+    public function set_schedule_for_consumer(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'start_time' => ['required'],
+            'end_time' => ['required'],
+            'appoinment_link' => ['required'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'err_message' => 'validation error',
+                'data' => $validator->errors(),
+            ], 422);
+        }
+
+        $schedule = DoctorAppoinment::find($request->id);
+
+        $check = DoctorAppoinment::where('consumer_id', '!=', $schedule->consumer_id)
+            ->where('appoinment_link', $request->appoinment_link)->exists();
+
+        if ($check) {
+            return response()->json([
+                'err_message' => 'validation error',
+                'data' => ["appoinment_link" => ["appoinment_link already taken. regenerate."]],
+            ], 422);
+        }
+
+        $doctor_schedule_start = Carbon::parse($request->doctor_schedule_start);
+        $doctor_schedule_end = Carbon::parse($request->doctor_schedule_end);
+        $start_time = Carbon::parse($request->start_time);
+        $end_time = Carbon::parse($request->end_time);
+
+        if (!$start_time->between($doctor_schedule_start, $doctor_schedule_end)) {
+            return response()->json([
+                'err_message' => 'validation error',
+                'data' => ["start_time" => ["start time should between {$request->doctor_schedule_start} to {$request->doctor_schedule_end}"]],
+            ], 422);
+        }
+
+        if (!$end_time->between($doctor_schedule_start, $doctor_schedule_end)) {
+            return response()->json([
+                'err_message' => 'validation error',
+                'data' => ["end_time" => ["end time should between {$request->doctor_schedule_start} to {$request->doctor_schedule_end}"]],
+            ], 422);
+        }
+
+        if ($start_time->gt($end_time)) {
+            return response()->json([
+                'err_message' => 'validation error',
+                'data' => ["start_time" => ["start time should smaller thant end time."]],
+            ], 422);
+        }
+
+        $schedules = DoctorAppoinment::where('doctor_id', Auth::user()->id)
+            ->where('date', $request->date)->get();
+
+        foreach ($schedules as $item) {
+            $check = $start_time->between($item->start_time, $item->end_time);
+            if ($check && ($item->consumer_id != $schedule->consumer->id)) {
+                return response()->json([
+                    'err_message' => 'validation error',
+                    'data' => ["start_time" => ["time already been taken."]],
+                ], 422);
+            }
+        }
+
+        foreach ($schedules as $item) {
+            $check = $end_time->between($item->start_time, $item->end_time);
+            if ($check && ($item->consumer_id != $schedule->consumer->id)) {
+                return response()->json([
+                    'err_message' => 'validation error',
+                    'data' => ["end_time" => ["endtime already been taken."]],
+                ], 422);
+            }
+        }
+
+        $schedule->start_time = $request->start_time;
+        $schedule->end_time = $request->end_time;
+        $schedule->appoinment_link = $request->appoinment_link;
+        $schedule->appoinment_status = 'approved';
+        $schedule->save();
+
+        return [
+            $schedule,
+            $request->all(),
+        ];
     }
 }

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\DoctorAppoinment;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class DoctorAppoinmentSeeder extends Seeder
@@ -18,9 +19,9 @@ class DoctorAppoinmentSeeder extends Seeder
             'id' => 1,
             'doctor_id' => 3,
             'consumer_id' => 5,
-            'date' => '2021-12-05',
-            'start_time' => '13:00',
-            'end_time' => '13:30',
+            'date' => Carbon::now()->toDateString(),
+            'start_time' => NULL,
+            'end_time' => NULL,
             'appoinment_link' => NULL,
             'appoinment_status' => 'pending',
             'payment_id' => 'RN-61AD0CB030547',
@@ -37,9 +38,9 @@ class DoctorAppoinmentSeeder extends Seeder
             'id' => 2,
             'doctor_id' => 3,
             'consumer_id' => 5,
-            'date' => '2021-12-05',
-            'start_time' => '13:31',
-            'end_time' => '14:00',
+            'date' => Carbon::now()->toDateString(),
+            'start_time' => NULL,
+            'end_time' => NULL,
             'appoinment_link' => NULL,
             'appoinment_status' => 'pending',
             'payment_id' => 'RN-61AD0F22D21D0',
@@ -56,9 +57,9 @@ class DoctorAppoinmentSeeder extends Seeder
             'id' => 3,
             'doctor_id' => 3,
             'consumer_id' => 5,
-            'date' => '2021-12-05',
-            'start_time' => '14:15',
-            'end_time' => '14:45',
+            'date' => Carbon::now()->toDateString(),
+            'start_time' => NULL,
+            'end_time' => NULL,
             'appoinment_link' => NULL,
             'appoinment_status' => 'pending',
             'payment_id' => 'RN-61B7806C1CF58',
@@ -75,10 +76,10 @@ class DoctorAppoinmentSeeder extends Seeder
             'id' => 4,
             'doctor_id' => 3,
             'consumer_id' => 5,
-            'date' => '2021-12-05',
-            'start_time' => '15:20',
-            'end_time' => '15:50',
-            'appoinment_link' => NULL,
+            'date' => Carbon::now()->toDateString(),
+            'start_time' => NULL,
+            'end_time' => NULL,
+            'appoinment_link' => 'https://meet.google.com/ewy-ntcw-rxm',
             'appoinment_status' => 'pending',
             'payment_id' => 'RN-61B78136142BE',
             'transaction_id' => 'ch_3K6IDpElSyBGmOnr14WsQX2h',
@@ -87,7 +88,26 @@ class DoctorAppoinmentSeeder extends Seeder
             'slug' => '61b78135cdb9f4',
             'status' => 1,
             'created_at' => '2021-12-13 11:21:57',
-            'updated_at' => '2021-12-13 11:21:57'
+            'updated_at' => '2021-12-14 22:21:59'
+        ]);
+
+        DoctorAppoinment::create([
+            'id' => 5,
+            'doctor_id' => 3,
+            'consumer_id' => 5,
+            'date' => Carbon::now()->toDateString(),
+            'start_time' => NULL,
+            'end_time' => NULL,
+            'appoinment_link' => 'https://meet.google.com/ewy-ntcx-rxm',
+            'appoinment_status' => 'pending',
+            'payment_id' => 'RN-61B96F2B065E2',
+            'transaction_id' => 'ch_3K6p7OElSyBGmOnr0tMjDkOM',
+            'payment_status' => 1,
+            'creator' => 5,
+            'slug' => '61b96f2ada6685',
+            'status' => 1,
+            'created_at' => '2021-12-14 22:29:30',
+            'updated_at' => '2021-12-14 22:33:24'
         ]);
     }
 }

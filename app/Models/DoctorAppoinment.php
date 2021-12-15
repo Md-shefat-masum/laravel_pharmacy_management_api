@@ -17,6 +17,7 @@ class DoctorAppoinment extends Model
         'time_slot',
         'formatted_start_time',
         'formatted_end_time',
+        'formatted_date',
     ];
 
     public function doctor()
@@ -78,6 +79,11 @@ class DoctorAppoinment extends Model
     public function getFormattedEndTimeAttribute()
     {
         return Carbon::parse($this->end_time)->format('h:i a');
+    }
+
+    public function getFormattedDateAttribute()
+    {
+        return Carbon::parse($this->date)->format('d F Y, l');
     }
 
     public function getTotalTimeAttribute()

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -17,6 +18,7 @@ class User extends Authenticatable
         'displayName',
         'designation',
         'doctor_info',
+        'age',
     ];
 
     public function getPhotoURLAttribute($value)
@@ -26,6 +28,10 @@ class User extends Authenticatable
     public function getDisplayNameAttribute()
     {
         return $this->user_name;
+    }
+    public function getAgeAttribute()
+    {
+        return Carbon::parse($this->dob)->age;
     }
     public function getDesignationAttribute()
     {

@@ -39,7 +39,7 @@ class UserDoctorInformaion extends Model
                 }
             }
 
-            for ($i = (int) $converted_start_time ; $i < (int) $converted_end_time; $i++) {
+            for ($i = (int) $converted_start_time ; $i <= (int) $converted_end_time; $i++) {
                 array_push($time_slots, Carbon::parse($i.':00')->format('h:i a'));
             }
         }
@@ -47,8 +47,8 @@ class UserDoctorInformaion extends Model
         return [
             'appoinment_date' => $date,
             'appoinment_day' => $day,
-            'start_time' => $start_time->format('h:i a'),
-            'end_time' => $end_time->format('h:i a'),
+            'start_time' => $start_time ? $start_time->format('h:i a') : '',
+            'end_time' => $end_time ? $end_time->format('h:i a') : '',
             'converted_start_time' => $converted_start_time,
             'converted_end_time' => $converted_end_time,
             'minute_diff_from_doctor_start_time' => $minute_diff_from_doctor_start_time,

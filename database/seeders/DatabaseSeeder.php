@@ -73,6 +73,7 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'id' => 1,
+            'user_code' => rand(100000,999999).'1',
             'first_name' => 'mr',
             'last_name' => 'super_admin',
             'user_name' => 'super_admin',
@@ -93,6 +94,7 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'id' => 2,
+            'user_code' => rand(100000,999999).'2',
             'first_name' => 'mr',
             'last_name' => 'admin',
             'user_name' => 'admin',
@@ -113,6 +115,7 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'id' => 3,
+            'user_code' => rand(100000,999999).'3',
             'first_name' => 'mr',
             'last_name' => 'doctor',
             'user_name' => 'doctor',
@@ -133,6 +136,7 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'id' => 4,
+            'user_code' => rand(100000,999999).'4',
             'first_name' => 'mr',
             'last_name' => 'pharmacy',
             'user_name' => 'pharmacy',
@@ -153,6 +157,7 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'id' => 5,
+            'user_code' => rand(100000,999999).'5',
             'first_name' => 'mr',
             'last_name' => 'consumer',
             'user_name' => 'consumer',
@@ -173,6 +178,7 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'id' => 6,
+            'user_code' => rand(100000,999999).'6',
             'first_name' => 'mr',
             'last_name' => 'delivery_man',
             'user_name' => 'delivery_man',
@@ -223,7 +229,7 @@ class DatabaseSeeder extends Seeder
             ["lat" => 23.702655, "lng" => 90.435249],
         ];
         for ($i = 0; $i < 10; $i++) {
-            User::create([
+            $user = User::create([
                 'first_name' => 'mr',
                 'last_name' => 'pharmacy' . ($i + 1),
                 'user_name' => 'pharmacy' . ($i + 1),
@@ -243,9 +249,11 @@ class DatabaseSeeder extends Seeder
                 'state' => 'bangladesh',
                 'zip_code' => '1414',
             ]);
+            $user->user_code = rand(100000,999999).$user->id;
+            $user->save();
         }
         for ($i = 0; $i < 10; $i++) {
-            User::create([
+            $user = User::create([
                 'first_name' => 'mr',
                 'last_name' => 'doctor'. ($i + 1),
                 'user_name' => 'doctor'. ($i + 1),
@@ -265,6 +273,8 @@ class DatabaseSeeder extends Seeder
                 'state' => 'bangladesh',
                 'zip_code' => '1414',
             ]);
+            $user->user_code = rand(100000,999999).$user->id;
+            $user->save();
         }
     }
 }

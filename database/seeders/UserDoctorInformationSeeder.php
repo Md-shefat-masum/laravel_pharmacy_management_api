@@ -51,23 +51,38 @@ class UserDoctorInformationSeeder extends Seeder
         $schedule = [
             [
                 "day" => "saturday",
-                "start_time" => "10:00",
-                "end_time" => "14:00",
+                "start_time" => "13:00",
+                "end_time" => "17:00",
             ],
             [
                 "day" => "sunday",
-                "start_time" => "10:00",
-                "end_time" => "14:00",
+                "start_time" => "13:00",
+                "end_time" => "17:00",
             ],
             [
                 "day" => "monday",
-                "start_time" => "10:00",
-                "end_time" => "14:00",
+                "start_time" => "15:00",
+                "end_time" => "18:00",
             ],
             [
                 "day" => "tuesday",
-                "start_time" => "10:00",
-                "end_time" => "14:00",
+                "start_time" => "14:00",
+                "end_time" => "17:00",
+            ],
+            [
+                "day" => "wednesday",
+                "start_time" => "14:00",
+                "end_time" => "17:00",
+            ],
+            [
+                "day" => "thursday",
+                "start_time" => "14:00",
+                "end_time" => "17:00",
+            ],
+            [
+                "day" => "friday",
+                "start_time" => "14:00",
+                "end_time" => "17:00",
             ],
         ];
 
