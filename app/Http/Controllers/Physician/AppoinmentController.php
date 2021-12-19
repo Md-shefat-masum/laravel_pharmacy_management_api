@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Order;
+namespace App\Http\Controllers\Physician;
 
 use App\Http\Controllers\Controller;
 use App\Models\DoctorAppoinment;
@@ -43,6 +43,19 @@ class AppoinmentController extends Controller
         return response()->json($appoinments, 200);
     }
 
+    public function doctor_approve_appoinments_for_calendar()
+    {
+        // title: 'Website Re-Design Plan',
+        // startDate: new Date(2018, 6, 2, 9, 30),
+        // endDate: new Date(2018, 6, 2, 15, 30),
+        // id: 16,
+        // location: 'Room 1',
+
+        $appoinments = DoctorAppoinment::where('doctor_id', Auth::user()->id)
+            ->where('appoinment_status','approved')->get();
+        return response()->json($appoinments, 200);
+    }
+
     public function get_user_appoinment($id)
     {
         $appoinment = DoctorAppoinment::where('consumer_id', Auth::user()->id)->where('id', $id)->with([
@@ -61,7 +74,7 @@ class AppoinmentController extends Controller
         $appoinment = DoctorAppoinment::where('doctor_id', Auth::user()->id)->where('id', $id)->with([
             // 'doctor:id,user_name,photo',
             'doctor' => function ($query) {
-                $query->select(['id', 'user_name', 'photo', 'role_serial','street', 'city', 'country', 'dob', 'email', 'contact_number']);
+                $query->select(['id', 'user_name', 'photo', 'role_serial', 'street', 'city', 'country', 'dob', 'email', 'contact_number']);
                 $query->with(['doctor_assistance:id,doctor_id,name,mobile_number,telephone_number']);
             },
             'consumer:id,user_name,photo,dob,role_serial,email,contact_number',

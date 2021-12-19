@@ -18,6 +18,9 @@ class DoctorAppoinment extends Model
         'formatted_start_time',
         'formatted_end_time',
         'formatted_date',
+        'startDate',
+        'endDate',
+        'title',
     ];
 
     public function doctor()
@@ -74,6 +77,21 @@ class DoctorAppoinment extends Model
     public function getFormattedStartTimeAttribute()
     {
         return Carbon::parse($this->start_time)->format('h:i a');
+    }
+
+    public function getTitleAttribute()
+    {
+        return $this->consumer->displayName;
+    }
+
+    public function getStartDateAttribute()
+    {
+        return Carbon::parse($this->date.' '.$this->start_time)->format('D M d Y H:i:s');
+    }
+
+    public function getEndDateAttribute()
+    {
+        return Carbon::parse($this->date.' '.$this->end_time)->format('D M d Y H:i:s');
     }
 
     public function getFormattedEndTimeAttribute()

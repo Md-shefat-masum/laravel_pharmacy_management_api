@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->double('lng')->nullable();
             $table->string('photo',100)->default('/avatar.png');
             $table->string('dob',30)->nullable();
+            $table->string('gender',30)->nullable();
             $table->string('street',100)->nullable();
             $table->string('city',50)->nullable();
             $table->string('country',50)->nullable();
